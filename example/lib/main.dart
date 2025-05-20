@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:variable_app_icon/variable_app_icon.dart';
 
@@ -15,7 +14,9 @@ const List<String> androidIconIds = [
   "appicon.ORANGE"
 ];
 
-void main() {
+Future<void> main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+   
   VariableAppIcon.iOSDefaultAppIcon = iosAppIcons[0];
   VariableAppIcon.androidAppIconIds = androidIconIds;
 
@@ -49,7 +50,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> changeIcon(int? value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt("currentIconIndex", value!);
-    print(value);
+    debugPrint(value.toString());
     setState(() {
       currentIconIndex = value;
     });
